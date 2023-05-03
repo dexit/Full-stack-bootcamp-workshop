@@ -1,32 +1,27 @@
 const sequelize = require('../config/connection');
 
 // grab models, exported from the models/name.js file
-//const { Reader, Book, LibraryCard , Book} = require('../models');
+const { Todo, User } = require('../models');
 
-//const readerSeedData = require('./readerSeedData.json');
-//const bookSeedData = require('./bookSeedData.json');
+const todoDataSeed = require('./todoDataSeed.json');
+const userDataSeed = require('./userDataSeed.json');
 
 const seedDatabase = async () => {
   await sequelize.sync({ force: true });
 
-  const readers = await Reader.bulkCreate(readerSeedData, {
+  const users = await User.bulkCreate(userDataSeed, {
     individualHooks: true,
     returning: true,
   });
 
-  for (const { id } of readers) {
-    const newCard = await LibraryCard.create({
-      reader_id: id,
+  for (const todo of todoDataSeed) {
+   await Todo.create({
+    ...todo,
+      user_id: users[Math.floor(Math.random() * users.length)].id,
     });
   }
 
-  for (const book of bookSeedData) {
-    const newBook = await Book.create({
-      ...book,
-      // Attach a random reader ID to each book
-      reader_id: readers[Math.floor(Math.random() * readers.length)].id,
-    });
-  }
+
 
   process.exit(0);
 };

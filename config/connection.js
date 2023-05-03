@@ -2,11 +2,9 @@ const Sequelize = require('sequelize');
 require('dotenv').config();
 
 const sequelize = new Sequelize(
-  
-
-  DB_NAME='library_db',
-  DB_USER='root',
-  DB_PASSWORD='5956272!Kk',
+  process.env.DB_NAME,
+  process.env.DB_USER,
+  process.env.DB_PASSWORD, 
   {
     host: 'localhost',
     dialect: 'mysql',

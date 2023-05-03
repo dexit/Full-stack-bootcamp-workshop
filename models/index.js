@@ -1,17 +1,16 @@
-const Reader = require('./Reader');
-const Book = require('./Book');
-const LibraryCard = require('./LibraryCard');
+const User = require('./User');
+const Todo = require('./Todo');
 
-Reader.hasOne(LibraryCard, {
-  foreignKey: 'reader_id',
-  onDelete: 'CASCADE',
-});
-Reader.hasMany(Book, {
-  foreignKey: 'reader_id',
-  onDelete: 'CASCADE',
-});
-LibraryCard.belongsTo(Reader, {
-  foreignKey: 'reader_id',
+// From -> User -> ToDo
+User.hasMany(Todo, {
+  foreignKey: 'user_id',
+ // onDelete: 'CASCADE',
 });
 
-module.exports = { Reader, Book, LibraryCard };
+//But we need to add a relationship between Todo and User
+Todo.belongsTo(User, {
+  foreignKey: 'user_id',
+  onDelete: 'CASCADE'
+})
+
+module.exports = { User, Todo };
