@@ -1,0 +1,2 @@
+DROP DATABASE IF EXISTS workshop_db;
+CREATE DATABASE workshop_db;
